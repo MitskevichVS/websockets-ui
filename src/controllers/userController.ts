@@ -10,10 +10,8 @@ export const createUser = (
   password: string,
   socket: ExtWebSocket
 ): void => {
-  const index: number = (indexCount += 1);
-
   socket.name = name;
-  socket.id = index;
+  socket.id = indexCount;
 
   UserService.setUser({ name, password, socket, inGame: false });
 
@@ -22,7 +20,7 @@ export const createUser = (
       type: Commands.REG,
       data: JSON.stringify({
         name,
-        index,
+        index: indexCount,
         error: false,
         errorText: "",
       }),
@@ -32,4 +30,6 @@ export const createUser = (
 
   updateRooms();
   updateWinners();
+
+  indexCount += 1;
 };
